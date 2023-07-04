@@ -6,10 +6,10 @@ import streamlit as st
 #def exibir_pagina_inicial():
 #    st.write('Página de Login')
 
-def autenticar_usuario(username, password):    
+def autenticar_usuario(nome, senha):    
     # Verifique se o nome de usuário e a senha correspondem a um usuário válido
     # Retorne True se a autenticação for bem-sucedida, ou False caso contrário
-    if username == "admin" and password == "senha123":
+    if nome == "admin" and senha == "senha123":
         return True
     else:
         return False
@@ -68,6 +68,7 @@ def exibir_pagina_restrita():
     st.plotly_chart(fig)
 
     # Aqui você pode exibir a página restrita acessível somente após a autenticação
+    st.sidebar.header(f"Olá, {st.session_states.nome}")
     st.sidebar.title('Dashboard de ações brasileiras')
 
     if st.sidebar.button("Logout"):
@@ -88,12 +89,12 @@ def main():
         exibir_pagina_restrita()
     else:
         # Se não estiver autenticado, exibe a página de login
-        username = st.text_input("Nome de Usuário", key)
-        password = st.text_input("Senha", type="password")
+        nome = st.text_input("Nome de Usuário")
+        senha = st.text_input("Senha", type="password")
 
         if st.button("Login"):
             # Verifica a autenticação do usuário
-            if autenticar_usuario(username, password):
+            if autenticar_usuario(nome, senha):
                 st.session_state.autenticado = True
             else:
                 st.error("Falha na autenticação. Tente novamente.")
