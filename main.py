@@ -45,7 +45,10 @@ def exibir_pagina_restrita():
     tickers = investpy.get_stocks_list(country='brazil')
     tickers = sorted(tickers)
 
-    st.sidebar.header('MENU DE AÇÕES DA B3')
+    st.sidebar.title('Dashboard de ações brasileiras')
+    st.sidebar.header("Olá, admin")
+
+    st.sidebar.subheader('MENU DE AÇÕES DA B3')
 
     ticker = st.sidebar.selectbox('Selecione uma ação: ', tickers)
 
@@ -68,8 +71,6 @@ def exibir_pagina_restrita():
     st.plotly_chart(fig)
 
     # Aqui você pode exibir a página restrita acessível somente após a autenticação
-    st.sidebar.header("Olá, admin")
-    st.sidebar.title('Dashboard de ações brasileiras')
 
     if st.sidebar.button("Logout"):
         st.session_state.autenticado = False
