@@ -1,1 +1,3 @@
 investpy
+yfinance
+plotly.graph_objects
