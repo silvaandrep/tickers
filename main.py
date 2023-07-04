@@ -1,4 +1,4 @@
-#import investpy
+import investpy
 import streamlit as st
 
 #def exibir_pagina_inicial():
