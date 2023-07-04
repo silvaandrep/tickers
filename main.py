@@ -20,7 +20,7 @@ def exibir_pagina_restrita():
     #ticker = st.sidebar.selectbox('Selecione uma ação: ', tickers)
     #ticker = ticker + ".SA"
 
-    ticker = 'TESTE'
+    ticker = 'teste'
 
     # Aqui você pode exibir a página restrita acessível somente após a autenticação
     st.sidebar.title('Dashboard de ações brasileiras')
