@@ -1,5 +1,5 @@
-#import investpy
 import streamlit as st
+import investpy
 
 #def exibir_pagina_inicial():
 #    st.write('Página de Login')
@@ -25,7 +25,7 @@ def exibir_pagina_restrita():
 
     # Aqui você pode exibir a página restrita acessível somente após a autenticação
     st.sidebar.title('Dashboard de ações brasileiras')
-    
+
     if st.sidebar.button("Logout"):
         st.session_state.autenticado = False
         
