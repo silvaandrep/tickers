@@ -1,5 +1,5 @@
 import streamlit as st
-
+import investpy
 #def exibir_pagina_inicial():
 #    st.write('Página de Login')
 
