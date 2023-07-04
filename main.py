@@ -96,6 +96,7 @@ def main():
         # Se não estiver autenticado, exibe a página de login
         nome = st.text_input("Nome de Usuário", key="textNome")
         senha = st.text_input("Senha", type="password")
+        st.session_state.textNome
 
         if st.button("Login"):
             # Verifica a autenticação do usuário
