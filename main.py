@@ -3,6 +3,8 @@ import yfinance as yf
 import plotly.graph_objects as go
 import streamlit as st
 
+nome = ""
+
 st.set_page_config(
     page_title="Dashboard de Ações Brasileiras",
     page_icon="chart_with_upwards_trend",
@@ -97,6 +99,8 @@ def main():
         # Se não estiver autenticado, exibe a página de login
         nome = st.text_input("Nome de Usuário", key="textNome")
         senha = st.text_input("Senha", type="password")
+
+        nome = st.session_state.textNome
 
         if st.button("Login"):
             # Verifica a autenticação do usuário
