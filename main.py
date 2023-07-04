@@ -1,4 +1,4 @@
-import yfinance
+import yfinance as yf
 import streamlit as st
 
 #def exibir_pagina_inicial():
