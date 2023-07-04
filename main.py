@@ -6,7 +6,7 @@ import streamlit as st
 st.set_page_config(
     page_title="Dashboard de Ações Brasileiras",
     page_icon="chart_with_upwards_trend",
-    layout="wide",
+    #layout="wide",
     initial_sidebar_state="expanded",
 )
 
@@ -53,7 +53,7 @@ def exibir_pagina_restrita():
     tickers = sorted(tickers)
 
     st.sidebar.title('Dashboard de ações brasileiras')
-    st.write(f'O resultado do trecho de código é:')
+    st.write(f'Olá, {st.session_state.textNome}')
 
 
     ticker = st.sidebar.selectbox('Selecione uma ação: ', tickers)
