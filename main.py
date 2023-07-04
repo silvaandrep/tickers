@@ -46,9 +46,7 @@ def exibir_pagina_restrita():
     tickers = sorted(tickers)
 
     st.sidebar.title('Dashboard de ações brasileiras')
-    st.sidebar.header("Olá, admin")
-
-    st.sidebar.subheader('MENU DE AÇÕES DA B3')
+    st.sidebar.header(st.session_state.textNome)
 
     ticker = st.sidebar.selectbox('Selecione uma ação: ', tickers)
 
@@ -90,7 +88,7 @@ def main():
         exibir_pagina_restrita()
     else:
         # Se não estiver autenticado, exibe a página de login
-        nome = st.text_input("Nome de Usuário")
+        nome = st.text_input("Nome de Usuário", key="textNome")
         senha = st.text_input("Senha", type="password")
 
         if st.button("Login"):
