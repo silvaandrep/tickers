@@ -1,3 +1,4 @@
+import investpy
 import streamlit as st
 
 #def exibir_pagina_inicial():
@@ -12,13 +13,22 @@ def autenticar_usuario(username, password):
         return False
 
 # Código da aplicação #=======================================================
-
+# Sidebar # ========================================
 def exibir_pagina_restrita():
+    tickers = investpy.get_stocks_list(country='brazil')
+    tickers = sorted(tickers)
+    
+    ticker = st.sidebar.selectbox('Selecione uma ação: ', tickers)
+    ticker = ticker + ".SA"
+
     # Aqui você pode exibir a página restrita acessível somente após a autenticação
-    st.sidebar.title('Sidebar')
+    st.sidebar.title('Dashboard de ações brasileiras')
+    
     if st.sidebar.button("Logout"):
         st.session_state.autenticado = False
-    st.title('Main')
+        
+# Main # =========================================    
+    st.header(ticker)
     
 # Fim do código da aplicação #===============================================
 
