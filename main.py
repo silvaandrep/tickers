@@ -1,3 +1,4 @@
+import investpy
 import streamlit as st
 
 #def exibir_pagina_inicial():
@@ -14,11 +15,11 @@ def autenticar_usuario(username, password):
 # Código da aplicação #=======================================================
 # Sidebar # ========================================
 def exibir_pagina_restrita():
-    #tickers = investpy.get_stocks_list(country='brazil')
-    #tickers = sorted(tickers)
+    tickers = investpy.get_stocks_list(country='brazil')
+    tickers = sorted(tickers)
     
-    #ticker = st.sidebar.selectbox('Selecione uma ação: ', tickers)
-    #ticker = ticker + ".SA"
+    ticker = st.sidebar.selectbox('Selecione uma ação: ', tickers)
+    ticker = ticker + ".SA"
 
     ticker = 'teste'
 
