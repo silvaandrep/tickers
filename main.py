@@ -53,8 +53,6 @@ def exibir_pagina_restrita():
     tickers = sorted(tickers)
 
     st.sidebar.title('Dashboard de ações brasileiras')
-    nome
-
 
     ticker = st.sidebar.selectbox('Selecione uma ação: ', tickers)
 
