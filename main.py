@@ -1,61 +1,54 @@
+import investpy
+import yfinance as yf
+import plotly.graph_objects as go
 import streamlit as st
 
-#def exibir_pagina_inicial():
-#    st.write('Página de Login')
+def candlestick_with_line_chart(data):
+    fig = go.Figure()
 
-def autenticar_usuario(username, password):    
-    # Verifique se o nome de usuário e a senha correspondem a um usuário válido
-    # Retorne True se a autenticação for bem-sucedida, ou False caso contrário
-    if username == "admin" and password == "senha123":
-        return True
-    else:
-        return False
+    # Gráfico de velas
+    fig.add_trace(go.Candlestick(x=data.index,
+                                 open=data['Open'],
+                                 high=data['High'],
+                                 low=data['Low'],
+                                 close=data['Close'],
+                                 name='Candles'))
 
-# Código da aplicação #=======================================================
-# Sidebar # ========================================
-def exibir_pagina_restrita():
-    #tickers = investpy.get_stocks_list(country='brazil')
-    #tickers = sorted(tickers)
-    
-    #ticker = st.sidebar.selectbox('Selecione uma ação: ', tickers)
-    #ticker = ticker + ".SA"
+    # Gráfico de linhas
+    fig.add_trace(go.Scatter(x=data.index,
+                             y=data['Close'],
+                             mode='lines',
+                             name='Line Chart'))
 
-    ticker = 'TESTE'
+    fig.update_layout(
+        title='Gráfico de Velas com Linha',
+        yaxis_title='Preço',
+        xaxis_rangeslider_visible=False
+    )
 
-    # Aqui você pode exibir a página restrita acessível somente após a autenticação
-    st.sidebar.title('Dashboard de ações brasileiras')
-    
-    if st.sidebar.button("Logout"):
-        st.session_state.autenticado = False
-        
-# Main # =========================================    
-    st.header(ticker)
-    
-# Fim do código da aplicação #===============================================
+    return fig
 
-def main():
-    # Inicializa o estado de autenticação como False (não autenticado)
-    if "autenticado" not in st.session_state:
-        st.session_state.autenticado = False
+tickers = investpy.get_stocks_list(country='brazil')
+tickers = sorted(tickers)
 
-    # Se estiver autenticado, exibe a página restrita
-    if st.session_state.autenticado:
-        exibir_pagina_restrita()
-    else:
-        # Se não estiver autenticado, exibe a página de login
-        username = st.text_input("Nome de Usuário")
-        password = st.text_input("Senha", type="password")
+st.sidebar.header('MENU DE AÇÕES DA B3')
 
-        if st.button("Login"):
-            # Verifica a autenticação do usuário
-            if autenticar_usuario(username, password):
-                st.session_state.autenticado = True
-            else:
-                st.error("Falha na autenticação. Tente novamente.")
+ticker = st.sidebar.selectbox('Selecione uma ação: ', tickers)
 
-    # Exibe a página inicial se não estiver autenticado
-    #if not st.session_state.autenticado:
-    #    exibir_pagina_inicial()
+ticker = ticker + ".SA"
 
-if __name__ == "__main__":
-    main()
+st.sidebar.write('Total de ações da B3: ', len(tickers))
+
+
+st.header(ticker)
+st.write('Você selecionou ', ticker)
+
+períodos = ['5d', '1mo', '3mo', '6mo', '1y', '2y', '5y', '10y', 'max']
+
+periodo = st.sidebar.selectbox('Selecione o período: ', períodos)
+
+dados = yf.download(ticker, period=periodo)
+
+st.title('Gráfico de Velas com Linha')
+fig = candlestick_with_line_chart(dados)
+st.plotly_chart(fig)
