@@ -3,6 +3,13 @@ import yfinance as yf
 import plotly.graph_objects as go
 import streamlit as st
 
+st.set_page_config(
+    page_title="Dashboard de Ações Brasileiras",
+    page_icon="chart_with_upwards_trend",
+    layout="wide",
+    initial_sidebar_state="expanded",
+)
+
 #def exibir_pagina_inicial():
 #    st.write('Página de Login')
 
@@ -46,7 +53,8 @@ def exibir_pagina_restrita():
     tickers = sorted(tickers)
 
     st.sidebar.title('Dashboard de ações brasileiras')
-    st.sidebar.header(st.session_state.textNome)
+    st.write(f'O resultado do trecho de código é:')
+
 
     ticker = st.sidebar.selectbox('Selecione uma ação: ', tickers)
 
