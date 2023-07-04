@@ -68,7 +68,7 @@ def exibir_pagina_restrita():
     st.plotly_chart(fig)
 
     # Aqui você pode exibir a página restrita acessível somente após a autenticação
-    st.sidebar.header(f"Olá, {st.session_states.nome}")
+    st.sidebar.header("Olá, admin")
     st.sidebar.title('Dashboard de ações brasileiras')
 
     if st.sidebar.button("Logout"):
