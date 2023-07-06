@@ -1,2 +1,2 @@
 # tickers
-Dashboard de ações brasileiras
+Dashboard de ações brasileiras https://tickers.streamlit.app
