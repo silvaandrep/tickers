@@ -19,10 +19,19 @@ st.set_page_config(
 def autenticar_usuario(nome, senha):    
     # Verifique se o nome de usuário e a senha correspondem a um usuário válido
     # Retorne True se a autenticação for bem-sucedida, ou False caso contrário
-    if nome == "admin" and senha == "senha123":
+    con = sqlite3.connect("usuarios.db")
+    cur = con.cursor()
+
+    cur.execute("SELECT * FROM usuarios WHERE nome=? AND senha=?", (nome, senha))
+
+    resultado = cur.fetchone()
+
+    if resultado is not None:
         return True
     else:
         return False
+    
+    con.close()
 
 def candlestick_with_line_chart(data):
     fig = go.Figure()
