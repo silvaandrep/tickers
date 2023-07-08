@@ -4,8 +4,6 @@ import yfinance as yf
 import plotly.graph_objects as go
 import streamlit as st
 
-nome = ""
-
 st.set_page_config(
     page_title="Dashboard de Ações Brasileiras",
     page_icon="chart_with_upwards_trend",
@@ -27,10 +25,13 @@ def autenticar_usuario(nome, senha):
     resultado = cur.fetchone()
 
     if resultado is not None:
+        st.session_state.nome = resultado[1]
+        st.session_state.ticker = resultado[3]
         return True
     else:
         return False
     
+    cur.close()
     con.close()
 
 def candlestick_with_line_chart(data):
@@ -63,25 +64,39 @@ def exibir_pagina_restrita():
 
     tickers = investpy.get_stocks_list(country='brazil')
     tickers = sorted(tickers)
+    numberTicker = 0
 
     st.sidebar.title('Dashboard de ações brasileiras')
-    #st.sidebar.header(f"Olá, {nome}")
+    st.sidebar.header(f"Olá, {st.session_state.nome}")
 
-    ticker = st.sidebar.selectbox('Selecione uma ação: ', tickers)
+    if st.session_state.ticker:
+        numberTicker = tickers.index(st.session_state.ticker)
 
-    ticker = ticker + ".SA"
+    ticker = st.sidebar.selectbox('Selecione uma ação: ', tickers, numberTicker)
+
+    con = sqlite3.connect("usuarios.db")
+    cur = con.cursor()
+
+    #cur.execute("UPDATE usuarios SET ticker = ?, WHERE  nome = st.session_state.nome", (ticker,))
+    cur.execute("UPDATE usuarios SET ticker = ? WHERE nome = ?", (ticker, st.session_state.nome, ))
+    con.commit()
+
+    cur.close()
+    con.close()
+
+    tickerSA = ticker + ".SA"
 
     st.sidebar.write('Total de ações da B3: ', len(tickers))
 
-    st.header(ticker)
+    st.header(tickerSA)
 
-    st.write('Você selecionou ', ticker)
+    st.write('Você selecionou ', tickerSA)
 
     períodos = ['5d', '1mo', '3mo', '6mo', '1y', '2y', '5y', '10y', 'max'] 
 
     periodo = st.sidebar.selectbox('Selecione o período: ', períodos)
 
-    dados = yf.download(ticker, period=periodo)
+    dados = yf.download(tickerSA, period=periodo)
 
     st.title('Gráfico de Velas com Linha')
     fig = candlestick_with_line_chart(dados)
@@ -98,6 +113,13 @@ def exibir_pagina_restrita():
 # Fim do código da aplicação #===============================================
 
 def main():
+
+    if "nome" not in st.session_state:
+        st.session_state.nome = ""
+    
+    if "ticker" not in st.session_state:
+        st.session_state.ticker = ""
+
     # Inicializa o estado de autenticação como False (não autenticado)
     if "autenticado" not in st.session_state:
         st.session_state.autenticado = False
