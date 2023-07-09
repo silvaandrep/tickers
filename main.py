@@ -3,6 +3,7 @@ import investpy
 import yfinance as yf
 import plotly.graph_objects as go
 import streamlit as st
+from pathlib import Path
 
 st.set_page_config(
     page_title="Dashboard de Ações Brasileiras",
@@ -10,6 +11,12 @@ st.set_page_config(
     #layout="wide",
     initial_sidebar_state="expanded",
 )
+
+dir = Path(__file__).parent if "__file__" in locals() else Path.cwd()
+arquivo_css = dir / "tickers.css"
+
+with open(arquivo_css) as c:
+    st.markdown("<style>{}</style>".format(c.read()), unsafe_allow_html=True)
 
 #def exibir_pagina_inicial():
 #    st.write('Página de Login')
