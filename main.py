@@ -95,15 +95,14 @@ def exibir_pagina_restrita():
 
     st.sidebar.write('Total de ações da B3: ', len(tickers))
 
-    st.header(tickerSA)
+    periodos = ['5d', '1mo', '3mo', '6mo', '1y', '2y', '5y', '10y', 'max'] 
 
-    st.write('Você selecionou ', tickerSA)
-
-    períodos = ['5d', '1mo', '3mo', '6mo', '1y', '2y', '5y', '10y', 'max'] 
-
-    periodo = st.sidebar.selectbox('Selecione o período: ', períodos)
+    periodo = st.sidebar.selectbox('Selecione o período: ', periodos)
 
     dados = yf.download(tickerSA, period=periodo)
+
+    st.header(tickerSA)
+    st.write('Você selecionou ', tickerSA)
 
     st.title('Gráfico de Velas com Linha')
     fig = candlestick_with_line_chart(dados)
@@ -113,11 +112,6 @@ def exibir_pagina_restrita():
 
     if st.sidebar.button("Logout"):
         st.session_state.autenticado = False
-        
-# Main # =========================================    
-    st.header(ticker)
-    
-# Fim do código da aplicação #===============================================
 
 def main():
 
